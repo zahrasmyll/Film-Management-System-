@@ -1,0 +1,68 @@
+package com.mycompany.filmmanagement;
+
+
+public class ReviewLinkedList {
+    private ReviewNode head;
+
+    public ReviewLinkedList() {
+        this.head = null;
+    }
+
+    public void addReview(Review review) {
+        ReviewNode newNode = new ReviewNode(review);
+        if (head == null) {
+            head = newNode;
+        } else {
+            ReviewNode current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+
+    public void deleteReview(String reviewerName) {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+
+        if (head.review.toString().contains(reviewerName)) {
+            head = head.next;
+            return;
+        }
+
+        ReviewNode current = head;
+        while (current.next != null && !current.next.review.toString().contains(reviewerName)) {
+            current = current.next;
+        }
+
+        if (current.next == null) {
+            System.out.println("Reviewer not found");
+        } else {
+            current.next = current.next.next;
+        }
+    }
+
+    public void printReviews() {
+        if (head == null) {
+            System.out.println("No reviews available.");
+            return;
+        }
+
+        ReviewNode current = head;
+        while (current != null) {
+            System.out.println(current.review);
+            current = current.next;
+        }
+    }
+
+    private static class ReviewNode {
+        private Review review;
+        private ReviewNode next;
+
+        public ReviewNode(Review review) {
+            this.review = review;
+        }
+    }
+}
